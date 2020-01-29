@@ -14,7 +14,7 @@ SOURCE_ROOT="$(pwd)"
 
 FORCE="false"
 LOG_FILE="$SOURCE_ROOT/logs/${PACKAGE_NAME}-${PACKAGE_VERSION}-$(date +"%F-%T").log"
-CONF_URL="https://raw.githubusercontent.com/linux-on-ibm-z/scripts/master/MariaDB_MaxScale/2.4.5/patch"
+CONF_URL="https://raw.githubusercontent.com/linux-on-ibm-z/scripts/master/MariaDB_MaxScale/2.4.2/patch"
 
 
 trap cleanup 0 1 2 ERR
