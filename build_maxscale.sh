@@ -14,7 +14,7 @@ SOURCE_ROOT="$(pwd)"
 
 FORCE="false"
 LOG_FILE="$SOURCE_ROOT/logs/${PACKAGE_NAME}-${PACKAGE_VERSION}-$(date +"%F-%T").log"
-CONF_URL="https://raw.githubusercontent.com/linux-on-ibm-z/scripts/master/MariaDB_MaxScale/2.4.2/patch"
+CONF_URL="https://raw.githubusercontent.com/linux-on-ibm-z/scripts/master/MariaDB_MaxScale/2.4.5/patch"
 
 
 trap cleanup 0 1 2 ERR
@@ -107,10 +107,6 @@ function configureAndInstall() {
 	cd $SOURCE_ROOT/build
 	cmake ../MaxScale -DBUILD_TESTS=Y
 	
-	if [[ "$DISTRO" == "sles-15" ]]; then
-		sudo ln -s /usr/lib64/liblzma.so.5 /usr/lib64/liblzma.so  
-	fi
-	
 	make
 	sudo make install
 	
@@ -197,12 +193,10 @@ case "$DISTRO" in
 	
 	if [[ "$DISTRO" == "ubuntu-16.04" ]]; then
 		sudo apt-get install -y gcc bison flex cmake perl libtool openssl libaio-dev git-core wget tar vim coreutils plotutils libc6 libssl-dev sqlite3 libmysqlclient20 libmysqlclient-dev pandoc mariadb-client libmariadb2 libmariadbd-dev librabbitmq-dev valgrind  libsqlite3-dev libsqlite3-0 tcl tcl-dev libuuid-perl libgnutls-dev libgnutls-openssl27 libgcrypt11-dev libdmalloc-dev libdmalloc5 libjemalloc-dev uuid uuid-dev libeditline-dev doxygen libedit-dev libpam0g-dev libpam-modules curl patch python |& tee -a "$LOG_FILE"
-    	elif [[ "$DISTRO" == "ubuntu-18.04" ]]; then
+    elif [[ "$DISTRO" == "ubuntu-18.04" ]]; then
 		sudo apt-get install -y gcc bison flex cmake perl libtool openssl libaio-dev git wget tar vim coreutils plotutils libc6 libssl-dev sqlite3 libmysqlclient20 pandoc mariadb-client libmariadb3 libmariadbd-dev librabbitmq-dev valgrind libsqlite3-dev libsqlite3-0 tcl tcl-dev libuuid-perl libcurl4-gnutls-dev libgnutls-openssl27 libgcrypt11-dev libdmalloc-dev libdmalloc5 libjemalloc-dev uuid uuid-dev libeditline-dev doxygen libedit-dev libpam0g-dev libpam-modules libmariadbclient-dev curl patch python |& tee -a "$LOG_FILE"
-	elif [[ "$DISTRO" == "ubuntu-19.10" ]]; then
-		sudo apt-get install -y gcc bison flex cmake perl libtool openssl libaio-dev git-core wget tar vim coreutils plotutils libc6 libssl-dev sqlite3 pandoc mariadb-client libmariadb-dev  librabbitmq-dev valgrind  libsqlite3-dev libsqlite3-0 tcl tcl-dev libuuid-perl libgnutls28-dev libgnutls-openssl27 libdmalloc-dev libdmalloc5 libjemalloc-dev uuid uuid-dev libeditline-dev doxygen libedit-dev libpam0g-dev libpam-modules curl patch python |& tee -a "$LOG_FILE"
 	else
-		sudo apt-get install -y gcc bison flex cmake perl libtool openssl libaio-dev git-core wget tar vim coreutils plotutils libc6 libssl-dev sqlite3 libmysqlclient20  pandoc mariadb-client libmariadb-dev  librabbitmq-dev valgrind  libsqlite3-dev libsqlite3-0 tcl tcl-dev libuuid-perl libgnutls28-dev libgnutls-openssl27 libgcrypt11-dev libdmalloc-dev libdmalloc5 libjemalloc-dev uuid uuid-dev libeditline-dev doxygen libedit-dev libpam0g-dev libpam-modules curl patch python |& tee -a "$LOG_FILE"
+		sudo apt-get install -y gcc bison flex cmake perl libtool openssl libaio-dev git-core wget tar vim coreutils plotutils libc6 libssl-dev sqlite3 pandoc mariadb-client libmariadb-dev  librabbitmq-dev valgrind  libsqlite3-dev libsqlite3-0 tcl tcl-dev libuuid-perl libgnutls28-dev libgnutls-openssl27 libdmalloc-dev libdmalloc5 libjemalloc-dev uuid uuid-dev libeditline-dev doxygen libedit-dev libpam0g-dev libpam-modules curl patch python |& tee -a "$LOG_FILE"
 	fi
 	configureAndInstall |& tee -a "$LOG_FILE"
     ;;
@@ -231,4 +225,3 @@ case "$DISTRO" in
 esac
 
 gettingStarted |& tee -a "$LOG_FILE"
-
